@@ -85,16 +85,18 @@ INSERT INTO proyecto_inmobiliario (nombre, direccion, presupuesto, fecha_inicio,
   "username": "admin@mail.com",
   "password": "12345"
 }
-```
-  
+```  
+
 * GET: read projects
     * GET localhost:8080/api/projects
-    * Auth: Bearer Token : Token : <token_generated in Auth>
+    * Auth: Bearer Token : Token : <token_generated in Auth>  
+  
   
 * GET: read project
-    * GET localhost:8080/api/projects/<id>
+    * GET localhost:8080/api/projects/id
     * Auth: Bearer Token : Token : <token_generated in Auth>
-    * example id = 3
+    * example id = 3  
+  
   
 * POST: create project
     * POST localhost:8080/api/projects
@@ -108,10 +110,10 @@ INSERT INTO proyecto_inmobiliario (nombre, direccion, presupuesto, fecha_inicio,
   "startDate": "2022-06-10",
   "completionDate": "2024-04-15"
 }
-```
+```  
   
 * PUT: update project
-    * PUT localhost:8080/api/projects/<id>
+    * PUT localhost:8080/api/projects/id
     * Auth: Bearer Token : Token : <token_generated in Auth>
     * example id = 5
     * BODY (example): 
@@ -126,6 +128,11 @@ INSERT INTO proyecto_inmobiliario (nombre, direccion, presupuesto, fecha_inicio,
 ```
   
 * DELETE: delete project
-    * DELETE localhost:8080/api/projects/<id>
+    * DELETE localhost:8080/api/projects/id
     * Auth: Bearer Token : Token : <token_generated in Auth>
     * example id = 5  
+
+  
+  
+- user@mail.com / 12345  
+  Can make only: GET
