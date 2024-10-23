@@ -1,3 +1,11 @@
+/**
+ * Clase de configuración de seguridad para la API RESTful.
+ *
+ * - Configura las rutas protegidas y las políticas de acceso.
+ * - Usa Spring Security para gestionar la autenticación y autorización.
+ * - Integra el filtro `JwtFilterRequest` para manejar la autenticación sin estado con JWT.
+ * - Deshabilita CSRF y establece la política de manejo de sesiones como STATELESS.
+ */
 package cl.fullstackjava.reportesInmobiliaria.configure;
 
 import org.springframework.context.annotation.Bean;

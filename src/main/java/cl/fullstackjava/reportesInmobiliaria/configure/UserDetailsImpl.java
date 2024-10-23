@@ -1,3 +1,9 @@
+/**
+ * Implementación de la interfaz UserDetails para cargar los detalles de los usuarios desde la base de datos.
+ *
+ * - Carga los roles y permisos del usuario.
+ * - Utilizado por Spring Security para la autenticación y autorización.
+ */
 package cl.fullstackjava.reportesInmobiliaria.configure;
 
 import cl.fullstackjava.reportesInmobiliaria.model.entities.User;

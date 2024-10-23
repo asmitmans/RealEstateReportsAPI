@@ -1,3 +1,15 @@
+/**
+ * Servicio para manejar la generación y validación de tokens JWT.
+ *
+ * - Genera tokens JWT firmados con una clave secreta usando el algoritmo HS256.
+ * - Valida los tokens, verifica su expiración y extrae datos como el nombre de usuario.
+ * - Utilizado por `JwtFilterRequest` para validar los tokens en cada solicitud.
+ *
+ * Implementación del **Patrón de Diseño Strategy**:
+ * - El método `extractClaim` aplica el **Patrón Strategy** al recibir una función como argumento.
+ * - Esto permite extraer de manera flexible cualquier claim (dato) del token JWT, como el nombre de usuario o la fecha de expiración.
+ * - Facilita la reutilización y flexibilidad, ya que el mismo método puede usarse para extraer distintos datos del token sin duplicar código.
+ */
 package cl.fullstackjava.reportesInmobiliaria.model.service;
 
 import io.jsonwebtoken.Claims;

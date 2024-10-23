@@ -1,3 +1,10 @@
+/**
+ * Filtro personalizado para validar tokens JWT en cada solicitud.
+ *
+ * - Extrae el token JWT del encabezado de la solicitud.
+ * - Valida el token y establece la autenticación en el contexto de seguridad de Spring Security.
+ * - Este filtro se ejecuta antes del filtro estándar de autenticación.
+ */
 package cl.fullstackjava.reportesInmobiliaria.configure;
 
 import cl.fullstackjava.reportesInmobiliaria.model.service.JwtService;
