@@ -1,138 +1,75 @@
-# Prueba - Desarrollo de aplicaciones JEE con Spring framework
-**URL**  
-http://localhost:8080
+# RealEstateReportsAPI - API para la Gestión de Proyectos Inmobiliarios
 
-**Config BD**  
-src/main/resources/application.properties
-
-**Credenciales por defecto**
-- admin@mail.com / 12345
-- user@mail.com / 12345
-
-**User Roles Tables**
-```sql
-DROP TABLE IF EXISTS t_user_t_role;
-
-DROP TABLE IF EXISTS t_user;
-DROP TABLE IF EXISTS t_role;
+## Descripción del Proyecto
+RealEstateReportsAPI es una API RESTful desarrollada en Java utilizando Spring
+Boot y JWT para la autenticación. Esta API permite gestionar proyectos
+inmobiliarios y acceder a reportes de los mismos. Los roles de usuario
+determinan los permisos y accesos, permitiendo que solo ciertos roles accedan
+a funcionalidades específicas. Los scripts SQL necesarios para crear las
+tablas y datos de prueba están incluidos en la carpeta `src/sql/`.
 
 
-CREATE TABLE t_user (
-	user_id SERIAL PRIMARY KEY,
-	username VARCHAR(100),
-	password VARCHAR(500),
-	first_name VARCHAR(100),
-	last_name VARCHAR(100)
-);
-
-CREATE TABLE t_role (
-	role_id SERIAL PRIMARY KEY,
-	name VARCHAR(100)
-);
-
-CREATE TABLE t_user_t_role (
-	user_id INT,
-	role_id INT,
-	PRIMARY KEY (user_id, role_id),
-	FOREIGN KEY (user_id) REFERENCES t_user(user_id),
-	FOREIGN KEY (role_id) REFERENCES t_role(role_id)
-);
+## Características
+- **Autenticación con JWT**: Los usuarios deben autenticarse con JWT para acceder
+  a las rutas protegidas.
+- **Gestión de Proyectos Inmobiliarios**: CRUD de proyectos.
+- **Roles y Permisos**: Los roles de usuario administran los permisos de acceso
+  a las distintas funcionalidades de la API.
+- **API RESTful**: La API sigue los principios REST y utiliza PostgreSQL como
+  base de datos.
 
 
-INSERT INTO t_role (name) VALUES ('ROLE_USER'), ('ROLE_ADMIN');
+## Configuración de la Base de Datos
+Para que la API funcione correctamente, es necesario configurar la base de
+datos en el archivo `application.properties`, que se encuentra en
+`src/main/resources`. Cambia los siguientes valores según tu configuración:
 
-INSERT INTO t_user (username, password, first_name, last_name) VALUES
-('admin@mail.com','$2a$12$ktKMhSvcRK4D9KzIFzljquwrVpUXNgkie2kaBrciVh9He4Y1E9mjK','Juan','Perez'),
-('user@mail.com','$2a$12$ktKMhSvcRK4D9KzIFzljquwrVpUXNgkie2kaBrciVh9He4Y1E9mjK','Pedro','Gonzales');
+- **Nombre de la base de datos**: `spring.datasource.url=jdbc:postgresql://localhost:5432/nombre_basedatos`
+- **Usuario de la base de datos**: `spring.datasource.username=usuario_bd`
+- **Contraseña del usuario**: `spring.datasource.password=password_usuario_bd`
 
-INSERT INTO t_user_t_role (user_id, role_id) VALUES
-((SELECT user_id FROM t_user WHERE username = 'admin@mail.com'), (SELECT role_id FROM t_role WHERE name = 'ROLE_ADMIN')),
-((SELECT user_id FROM t_user WHERE username = 'admin@mail.com'), (SELECT role_id FROM t_role WHERE name = 'ROLE_USER')),
-((SELECT user_id FROM t_user WHERE username = 'user@mail.com'), (SELECT role_id FROM t_role WHERE name = 'ROLE_USER'));
-```
+Luego, ejecuta los scripts SQL que se encuentran en `src/sql/` para crear las
+tablas necesarias:
 
-**Projects Table**
-```sql
-DROP TABLE IF EXISTS proyecto_inmobiliario;
-
-CREATE TABLE proyecto_inmobiliario (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    direccion VARCHAR(255) NOT NULL,
-    presupuesto BIGINT NOT NULL,
-    fecha_inicio DATE,
-    fecha_entrega DATE
-);
+1. `roles_tables.sql`: Crea las tablas de roles de usuario.
+2. `projects_table.sql`: Crea las tablas relacionadas con los proyectos inmobiliarios.
 
 
-INSERT INTO proyecto_inmobiliario (nombre, direccion, presupuesto, fecha_inicio, fecha_entrega) VALUES
-('Torre Providencia', 'Av. Providencia 123, Providencia', 20000000000, '2024-01-15', '2025-12-20'),
-('Hotel Las Palmas', 'Costanera 456, Viña del Mar', 2500000000, '2023-03-01', '2024-09-30'),
-('Edificio Los Sauces', 'Av. Arturo Prat 789, Temuco', 1500000000, '2022-06-10', '2024-04-15'),
-('Condominio El Arrayán', 'El Rodeo 123, Lo Barnechea', 7256000000, '2023-08-05', '2025-01-25'),
-('Complejo Eco Verde', 'Barrio Eco 789, La Serena', 1800000000, '2024-02-20', '2026-06-30');
-```
+## Uso de la API
+### Autenticación
+- Para autenticarse, los usuarios deben enviar sus credenciales a `/auth/login`.
+  Esto devolverá un token JWT, que se debe incluir en los encabezados de las
+  peticiones para acceder a las rutas protegidas.
 
-**Use**
-- admin@mail.com / 12345  
-    Can make: GET, POST, PUT, DELETE
+### Endpoints principales
+- **Proyectos**:
+  - `GET /api/projects`: Listar todos los proyectos (solo para usuarios autenticados).
+  - `POST /api/projects`: Crear un nuevo proyecto (solo para administradores).
+  - `PUT /api/projects/{id}`: Actualizar un proyecto existente.
+  - `DELETE /api/projects/{id}`: Eliminar un proyecto existente.
 
-* Auth: 
-  * POST localhost:8080/api/auth
-  * BODY:
-```json
-{
-  "username": "admin@mail.com",
-  "password": "12345"
-}
-```  
+### Roles y Permisos
+Los usuarios pueden tener uno de los siguientes roles:
+- **Admin**: Tiene acceso a todas las funcionalidades, incluyendo la creación
+  y eliminación de proyectos.
+- **User**: Solo puede visualizar los proyectos.
 
-* GET: read projects
-    * GET localhost:8080/api/projects
-    * Auth: Bearer Token : Token : <token_generated in Auth>  
-  
-  
-* GET: read project
-    * GET localhost:8080/api/projects/id
-    * Auth: Bearer Token : Token : <token_generated in Auth>
-    * example id = 3  
-  
-  
-* POST: create project
-    * POST localhost:8080/api/projects
-    * Auth: Bearer Token : Token : <token_generated in Auth>
-    * BODY (example):
-```json
-{
-  "name": "Edificio Los Alamos",
-  "address": "Av. Arturo Prat 789, Temuco",
-  "budget": 1500000000,
-  "startDate": "2022-06-10",
-  "completionDate": "2024-04-15"
-}
-```  
-  
-* PUT: update project
-    * PUT localhost:8080/api/projects/id
-    * Auth: Bearer Token : Token : <token_generated in Auth>
-    * example id = 5
-    * BODY (example): 
-```json
-{
-  "name": "Edificio Los Alamos",
-  "address": "Av. Arturo Prat 789, Temuco",
-  "budget": 1500000000,
-  "startDate": "2022-06-10",
-  "completionDate": "2024-04-15"
-}
-```
-  
-* DELETE: delete project
-    * DELETE localhost:8080/api/projects/id
-    * Auth: Bearer Token : Token : <token_generated in Auth>
-    * example id = 5  
 
-  
-  
-- user@mail.com / 12345  
-  Can make only: GET
+## Instalación y Uso
+1. Clona este repositorio:
+  ```bash
+  git clone https://github.com/asmitmans/RealEstateReportsAPI.git
+  ```
+2. Configura la base de datos siguiendo los pasos de la sección anterior.
+3. Ejecuta los scripts SQL para crear las tablas.
+4. Importa el proyecto en **IntelliJ** o cualquier IDE compatible con **Spring Boot**.
+5. Ejecuta el proyecto y accede a:
+  ```bash
+  http://localhost:8080/
+  ```
+
+
+## Autor
+Este proyecto fue desarrollado por [Agustin Smitmans](https://github.com/asmitmans) 
+como parte de un desafío técnico en Spring Boot. Puedes contactarme a través de 
+mi perfil en GitHub para más información.
