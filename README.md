@@ -1,16 +1,18 @@
 # RealEstateReportsAPI - API para la Gestión de Proyectos Inmobiliarios
 
 ## Descripción del Proyecto
-RealEstateReportsAPI es una API RESTful desarrollada en Java utilizando Spring
-Boot y JWT para la autenticación. Esta API permite gestionar proyectos
-inmobiliarios y acceder a reportes de los mismos. Los roles de usuario
-determinan los permisos y accesos, permitiendo que solo ciertos roles accedan
-a funcionalidades específicas. Los scripts SQL necesarios para crear las
-tablas y datos de prueba están incluidos en la carpeta `src/sql/`.
+RealEstateReportsAPI es una API RESTful desarrollada en Java utilizando 
+Spring Boot, **Spring Security** y **JWT** para la autenticación y autorización. 
+Esta API permite gestionar proyectos inmobiliarios y acceder a reportes de los 
+mismos. Los roles de usuario, gestionados a través de **Spring Security**, 
+determinan los permisos y accesos, permitiendo que solo ciertos roles accedan a 
+funcionalidades específicas. Los scripts SQL necesarios para crear las tablas y 
+datos de prueba están incluidos en la carpeta `src/sql/`.
 
 
 ## Características
-- **Autenticación con JWT**: Los usuarios deben autenticarse con JWT para acceder
+- **Autenticación y Autorización con JWT y Spring Security**: Los usuarios deben 
+  autenticarse con JWT, y **Spring Security** gestiona los permisos para acceder 
   a las rutas protegidas.
 - **Gestión de Proyectos Inmobiliarios**: CRUD de proyectos.
 - **Roles y Permisos**: Los roles de usuario administran los permisos de acceso
