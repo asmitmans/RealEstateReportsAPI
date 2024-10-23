@@ -54,6 +54,65 @@ Los usuarios pueden tener uno de los siguientes roles:
   y eliminación de proyectos.
 - **User**: Solo puede visualizar los proyectos.
 
+### Ejemplos de Uso
+* Auth:
+  * POST localhost:8080/api/auth
+  * BODY:
+```json
+{
+  "username": "admin@mail.com",
+  "password": "12345"
+}
+```  
+* GET: read projects
+  * GET localhost:8080/api/projects
+  * Auth: Bearer Token : Token : <token_generated in Auth>
+
+
+* GET: read project
+  * GET localhost:8080/api/projects/id
+  * Auth: Bearer Token : Token : <token_generated in Auth>
+  * example id = 3
+
+
+* POST: create project
+  * POST localhost:8080/api/projects
+  * Auth: Bearer Token : Token : <token_generated in Auth>
+  * BODY (example):
+```json
+{
+  "name": "Edificio Los Alamos",
+  "address": "Av. Arturo Prat 789, Temuco",
+  "budget": 1500000000,
+  "startDate": "2022-06-10",
+  "completionDate": "2024-04-15"
+}
+```  
+
+* PUT: update project
+  * PUT localhost:8080/api/projects/id
+  * Auth: Bearer Token : Token : <token_generated in Auth>
+  * example id = 5
+  * BODY (example):
+```json
+{
+  "name": "Edificio Los Alamos",
+  "address": "Av. Arturo Prat 789, Temuco",
+  "budget": 1500000000,
+  "startDate": "2022-06-10",
+  "completionDate": "2024-04-15"
+}
+```
+
+* DELETE: delete project
+  * DELETE localhost:8080/api/projects/id
+  * Auth: Bearer Token : Token : <token_generated in Auth>
+  * example id = 5
+
+
+- user@mail.com / 12345  
+  Can make only: GET
+
 
 ## Instalación y Uso
 1. Clona este repositorio:
