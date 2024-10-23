@@ -11,7 +11,7 @@ la seguridad en Spring Boot.
 - **jjwt-api**: Librería utilizada para generar y validar tokens **JWT**.
 - **spring-security-test**: Para pruebas de seguridad.
 
-## 2. Spring Security y JWT trabajando juntos
+## 2. Spring Security y JWT
 El proyecto utiliza **Spring Security** para proteger las rutas y gestionar los 
 roles y permisos. Al mismo tiempo, usa **JWT** como mecanismo de autenticación 
 sin estado. Estos son los pasos clave:
