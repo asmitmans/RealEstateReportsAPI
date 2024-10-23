@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cl.fullstackjava</groupId>
-	<artifactId>reportesInmobiliaria</artifactId>
+	<artifactId>RealEstateReportsAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Reportes Inmobiliaria</name>
+	<name>RealEstateReportsAPI</name>
 	<description>API REST para gestionar proyectos inmobiliarios</description>
 	<url/>
 	<licenses>
